@@ -179,6 +179,11 @@ namespace RMP400S_SG_Placement.Database.ExtensionMethods
                         object deserialisedObject = JsonConvert.DeserializeObject(JSON, subProperty.PropertyType);
                         subProperty.SetValue(classInstance, deserialisedObject);
                     }
+                    else if (subProperty.PropertyType.BaseType == typeof(Enum))
+                    {
+                        var enumValue = Enum.Parse(subProperty.PropertyType, (string)value);
+                        subProperty.SetValue(classInstance, enumValue);
+                    }
                     else
                     {
                         subProperty.SetValue(classInstance, Convert.ChangeType(value, subProperty.PropertyType));
